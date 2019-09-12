@@ -12,22 +12,24 @@ class Hunter {
 
         this.acceleration = createVector(accel, 0);
         this.acceleration.rotate(this.carDirection.heading());
-        // if (accel < 0) { this.acceleration.rotate(PI); }
         drawArrow(this.initial, this.acceleration.copy().mult(1000), color(255, 0, 0));
-
-        const delta = clamp(turnDirection* Infinity, -1, 1);
-        // const turn = createVector(Math.log10(delta * this.velocity.mag()), 0).rotate(this.velocity.heading());
-        // turn.rotate(HALF_PI);
-        // this.velocity.add(turn); 
-        // drawArrow(this.velocity.copy().mult(100).add(this.initial), turn.copy().mult(1000), color(255, 255, 100));
-
         this.velocity.add(this.acceleration);
 
         const lastVelocity = this.velocity.copy();
+
+        const delta = clamp(turnDirection, -1, 1);
+        const turn = this.velocity.copy().mult(delta * .02).mult(this.velocity.mag()).limit(10);
+        console.log(turn);
+        turn.rotate(HALF_PI);
+        this.velocity.add(turn);
+        console.log(turn);
         
+        drawArrow(this.velocity.copy().mult(100).add(this.initial), turn.copy().mult(1000), color(255, 255, 100));
+
         this.carDirection.rotate(this.velocity.heading() - lastVelocity.heading());
 
-        this.velocity.mult(.99);
+        this.velocity.mult(.98);
+        this.velocity.limit(10)
         drawArrow(this.initial, this.velocity.copy().mult(100), color(0, 255, 0));
 
         this.position.add(this.velocity);

@@ -100,9 +100,6 @@ function draw() {
   // moveSpeed = moveSpeed + .000001;
   // if (i == 1000) { noLoop(); } else { i++; }
 
-
-
-
 }
 
 function readKey() {
