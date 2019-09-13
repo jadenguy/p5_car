@@ -32,6 +32,13 @@ class Hunter {
 
         this.position.add(this.velocity);
         //this.DrawMovementVectors();
+        const xInside = clamp(this.position.x, this.size, width - this.size);
+        const yInside = clamp(this.position.y, this.size, height - this.size);
+        if (this.position.x != xInside || this.position.y != yInside) {
+            this.velocity = createVector(0, 0);
+            this.position.x = xInside;
+            this.position.y = yInside;
+        }
     }
     Draw(c) {
         push();
