@@ -13,7 +13,7 @@ class Hunter {
     }
     Update(turnDirection, accel) {
 
-        this.acceleration = createVector(accel * 1.5, 0);
+        this.acceleration = createVector(accel, 0);
         this.acceleration.rotate(this.carDirection.heading());
         this.velocity.add(this.acceleration);
 
@@ -36,23 +36,24 @@ class Hunter {
 
         this.position.add(this.velocity);
 
-        this.DrawMovementVectors();
 
         const xInside = clamp(this.position.x, this.size, width - this.size);
         const yInside = clamp(this.position.y, this.size, height - this.size);
         if (this.position.x != xInside || this.position.y != yInside) {
+            console.log(this.velocity.mag());
+
             this.velocity.mult(-.1);
             this.position.x = xInside;
             this.position.y = yInside;
         }
     }
-    Draw(c) {
+    Draw(c, arrows = false) {
         push();
         stroke(0);
         fill(c);
         // console.log(this.position);
-        const x = this.position.x;
-        const y = this.position.y;
+        // const x = this.position.x;
+        // const y = this.position.y;
         // console.log(x, y);
         translate(this.position.x, this.position.y);
         const angle = this.carDirection.heading();
@@ -60,10 +61,10 @@ class Hunter {
         rotate(angle);
         // const ret = rect(0, 0, this.size, this.size);
         rectMode(RADIUS);
-        rect(this.size, 0, this.size / 2, this.size / 2);
-        rect(0, 0, this.size, this.size);
+        if (arrows) { this.DrawMovementVectors(); }
+        const ret = [rect(this.size, 0, this.size / 2, this.size / 2), rect(0, 0, this.size, this.size)];
         pop();
-        // return ret;
+        return ret;
     }
     DrawMovementVectors(mag = 10) {
         drawArrow(this.initial, this.acceleration.copy().mult(20 * mag), color(255, 0, 0));

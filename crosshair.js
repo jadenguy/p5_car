@@ -2,12 +2,13 @@ class Crosshair {
     constructor(x, y, moveSpeed) {
         this.position = createVector(x, y);
         this.xOff = 0.0;
-        this.yOff = 1.0;
-        this.moveSpeed = 0.005;
+        this.moveSpeed = moveSpeed;
     }
     Update() {
-        this.x = noise(this.xOff) * width;
-        this.y = noise(this.yOff) * height;
+        this.xOff += this.moveSpeed;
+        this.position.x = noise(this.xOff) * width;
+        this.position.y = noise(this.xOff + 10) * height;
+        return this.position;
     }
     Draw(c) {
         push();

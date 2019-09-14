@@ -16,7 +16,7 @@ function setup() {
   h = new Hunter(width / 2, height / 2, 5, 5, 2);
   p = new prey();
   c = new coin();
-  x = new Crosshair(0, 0);
+  x = new Crosshair(0,0,.005);
   fill(0);
   stroke(0);
 }
@@ -69,9 +69,8 @@ function draw() {
   background(204);
   x.Update();
 
-  h.Update(deltaHeading, acceleration);
-
   readKey();
+  h.Update(deltaHeading, acceleration);
 
   x.Draw(color(redness, 0, 0));
   h.Draw(color(0, green, 0));
@@ -114,10 +113,10 @@ function readKey() {
   }
 
   if (keyIsDown(DOWN_ARROW)) {
-    acceleration = -.1;
+    acceleration = -.15;
   }
   if (keyIsDown(UP_ARROW)) {
-    acceleration = .1;
+    acceleration = .15;
   }
 
 }
