@@ -13,7 +13,7 @@ const maxSpeed = 30;
 function setup() {
   createCanvas(500, 500);
   // noCursor();
-  h = new Hunter(width / 2, height / 2, 5, 5  , 2);
+  h = new Hunter(width / 2, height / 2, 5, 5, 2);
   p = new prey();
   c = new coin();
   x = new Crosshair(0, 0);
@@ -98,8 +98,8 @@ function draw() {
 
   // ellipse(mouseX, mouseY, 10, 10);
   // moveSpeed = moveSpeed + .000001;
-  // if (i == 1000) { noLoop(); } else { i++; }
-
+  // if (i == 100) { noLoop(); }
+  i++;
 }
 
 function readKey() {
