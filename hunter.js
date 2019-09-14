@@ -1,5 +1,5 @@
 class Hunter {
-    constructor(x, y, size) {
+    constructor(x, y, size, maxSpeed, handling) {
         this.turnMax = 1;
         this.initial = createVector(x, y);
         this.position = createVector(x, y);
@@ -8,6 +8,8 @@ class Hunter {
         this.acceleration = createVector(0, 0);
         this.turn = createVector(0, 0);
         this.size = size;
+        this.maxSpeed = maxSpeed;
+        this.handling = handling;
     }
     Update(turnDirection, accel) {
 
@@ -18,20 +20,23 @@ class Hunter {
         const lastVelocity = this.velocity.copy();
 
         const delta = clamp(turnDirection, -1, 1);
-        this.turn = this.velocity.copy().mult(delta * .01).mult(this.velocity.mag()).limit(10);
+        this.turn = this.velocity.copy().mult(delta * this.handling / 100).mult(this.velocity.mag());
         this.turn.rotate(HALF_PI);
+        if (this.velocity.angleBetween(this.carDirection) > QUARTER_PI) {
+            this.turn.rotate(PI);
+        }
         this.velocity.add(this.turn);
 
         this.carDirection.rotate(this.velocity.heading() - lastVelocity.heading());
 
         this.velocity.mult(.98); //friction
-        this.velocity.limit(10)
+        this.velocity.limit(this.maxSpeed)
 
 
         this.position.add(this.velocity);
-        
+
         //this.DrawMovementVectors();
-        
+
         const xInside = clamp(this.position.x, this.size, width - this.size);
         const yInside = clamp(this.position.y, this.size, height - this.size);
         if (this.position.x != xInside || this.position.y != yInside) {

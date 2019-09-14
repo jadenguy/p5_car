@@ -11,9 +11,9 @@ const slowDown = 30; // in frames
 const maxSpeed = 30;
 
 function setup() {
-  createCanvas(640, 640);
+  createCanvas(500, 500);
   // noCursor();
-  h = new Hunter(width / 2, height / 2, 10);
+  h = new Hunter(width / 2, height / 2, 5, 5  , 2);
   p = new prey();
   c = new coin();
   x = new Crosshair(0, 0);
