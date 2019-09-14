@@ -22,20 +22,20 @@ class Hunter {
         this.turn.rotate(HALF_PI);
         this.velocity.add(this.turn);
 
-
         this.carDirection.rotate(this.velocity.heading() - lastVelocity.heading());
 
-        this.velocity.mult(.98);
+        this.velocity.mult(.98); //friction
         this.velocity.limit(10)
-        // console.log(this.velocity.mag());
 
 
         this.position.add(this.velocity);
+        
         //this.DrawMovementVectors();
+        
         const xInside = clamp(this.position.x, this.size, width - this.size);
         const yInside = clamp(this.position.y, this.size, height - this.size);
         if (this.position.x != xInside || this.position.y != yInside) {
-            this.velocity = createVector(0, 0);
+            this.velocity.mult(-.1);
             this.position.x = xInside;
             this.position.y = yInside;
         }
